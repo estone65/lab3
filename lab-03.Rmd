@@ -19,17 +19,65 @@ nobel <- read_csv("data/nobel.csv")
 
 ### Exercise 1
 
-Remove this text, and add your answer for Exercise 1 here.
-Add code chunks as needed.
-Don't forget to label your code chunk.
-Do not use spaces in code chunk labels.
+```{r exercise-1}
+number_of_rows <- nrow(nobel)
+number_of_columns <- ncol(nobel)
+print(paste("Number of rows:", number_of_rows))
+print(paste("Number of columns:", number_of_columns))
+```
+
+How many observations and how many variables are in the dataset? Use inline code to answer this question. What does each row represent?
+
+There are 935 observations and 26 variables.  Note that I could also just see this in the environment, but this code produced the information as well.
+
 
 ### Exercise 2
 
-Remove this text, and add your answer for Exercise 1 here.
-Add code chunks as needed.
-Don't forget to label your code chunk.
-Do not use spaces in code chunk labels.
+```{r exercise-2}
+# making sure the simplest command works
+nobel %>%
+  count (country)
+# seeing if I am filtering for na appropriately
+nobel_subset <- nobel %>%
+  filter(!is.na(country))
+nobel_subset %>%
+  count (country)
+# now filtering for people
+nobel %>%
+  count (gender)
+nobel_subset2 <- nobel %>%
+  filter(gender != "org")
+nobel_subset2 %>%
+  count (gender)
+# now filtering for alive people
+nobel_subset3 <- nobel %>%
+  filter(!is.na(died_date))
+nobel_subset3 %>%
+  count (died_date)
+# now putting it all together
+nobel_living <- nobel %>%
+  filter (
+    !is.na(country),
+    gender != "org" ,
+    !is.na(died_date)
+  )
+number_of_rows <- nrow(nobel_living)
+number_of_columns <- ncol(nobel_living)
+print(paste("Number of rows:", number_of_rows))
+print(paste("Number of columns:", number_of_columns))
+```
+
+Create a new data frame called nobel_living that filters for
+
+   laureates for whom country is available
+   laureates who are people as opposed to organizations (organizations are  denoted with "org" as their gender)
+   laureates who are still alive (their died_date is NA)
+
+Confirm that once you have filtered for these characteristics you are left with a data frame with 228 observations, once again using inline code.
+
+Hmm.  I have 453 observations. :(
+
+
 
 ### Exercise 3
 
