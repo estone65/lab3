@@ -160,7 +160,18 @@ Answer:  Regardless of the category, a sizeable minority of the US-born winners 
 
 ### Exercise 6
 
+In a single pipeline, filter for laureates who won their prize in the US, but were born outside of the US, and then create a frequency table (with the count() function) for their birth country (born_country) and arrange the resulting data frame in descending order of number of observations for each country. Which country is the most common?
 
 ```{r exercise-6}
-#exercise 6
+#assuming we're still working with living laureates in the sciences
+nobel_living_science_finalfilter <- nobel_living_science %>%
+  filter (
+    country_us == "USA" ,
+    country_us_born == "Other"
+  )
+nobel_living_science_finalfilter %>%
+  count (born_country) %>%
+  arrange(desc(n))
 ```
+
+Canada and the United Kingdom are the most common!
