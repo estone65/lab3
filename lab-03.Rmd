@@ -124,15 +124,39 @@ These data aren't all that relevant to the Buzzfeed claim, because they don't de
 
 
 ```{r exercise-4}
-#exercise 4
+nobel_living_science <- nobel_living_science %>%
+  mutate(
+    country_us_born = if_else(born_country == "USA", "USA", "Other")
+  )
+nobel_living_science %>%
+  count (country_us_born)
 ```
+
+Create a new variable called born_country_us that has the value "USA" if the laureate is born in the US, and "Other" otherwise. How many of the winners are born in the US?
+
+133 were born in the US. 316 were born elsewhere. This is a substantially smaller percentage than the percentage that were living in the US when they won the prize.
 
 ### Exercise 5
 
+Add a second variable to your visualization from Exercise 3 based on whether the laureate was born in the US or not. Based on your visualization, do the data appear to support Buzzfeed’s claim? Explain your reasoning in 1-2 sentences.
+
+    Your final visualization should contain a facet for each category.
+    Within each facet, there should be a bar for whether the laureate won the award in the US or not.
+    Each bar should have segments for whether the laureate was born in the US or not.
+
 
 ```{r exercise-5}
-#exercise 5
+#starting without the faceting .
+ggplot(data = nobel_living_science, mapping = aes(x = country_us, 
+                  fill = country_us_born))+
+  geom_bar()
+#now faceting .
+ggplot(data = nobel_living_science, mapping = aes(x = country_us, 
+                  fill = country_us_born))+
+  geom_bar() +
+  facet_grid (~ category)
 ```
+Answer:  Regardless of the category, a sizeable minority of the US-born winners were born in other countries, whereas none of the non-US-born winners were born in the United States.
 
 ### Exercise 6
 
