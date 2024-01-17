@@ -65,6 +65,13 @@ number_of_rows <- nrow(nobel_living)
 number_of_columns <- ncol(nobel_living)
 print(paste("Number of rows:", number_of_rows))
 print(paste("Number of columns:", number_of_columns))
+# I have 453 observations, so something is wrong.
+nobel_living %>%
+  count (country)
+nobel_living %>%
+  count (gender)
+nobel_living %>%
+  count (died_date)
 ```
 
 Create a new data frame called nobel_living that filters for
@@ -77,23 +84,59 @@ Confirm that once you have filtered for these characteristics you are left with 
 
 Hmm.  I have 453 observations. :(
 
-
+However ... when I check, I have no na's for country, no org in gender, and no na's for died_date.  I've also looked through the data set, and that confirms the above.  I think my 453 is correct, but I realize I may be wrong!
 
 ### Exercise 3
 
-Remove this text, and add your answer for Exercise 1 here.
-Add code chunks as needed.
-Don't forget to label your code chunk.
-Do not use spaces in code chunk labels.
+
+```{r exercise-3}
+# creating nobel_living_science with the variable depicting US yes/no
+nobel_living_science <- nobel_living %>%
+  filter(category %in% c("Physics", "Medicine", "Chemistry", "Economics"))
+nobel_living_science <- nobel_living_science %>%
+  mutate(
+    country_us = if_else(country == "USA", "USA", "Other")
+  )
+nobel_living_science %>%
+  count (country_us)
+# simple bar chart, ignoring category .
+ggplot(data = nobel_living_science, mapping = aes(x = country_us)) +
+  geom_bar()
+ggplot(nobel_living_science, aes (x = country_us)) +
+  geom_bar()
+#faceting by category .
+ggplot(nobel_living_science, aes (x = country_us)) +
+  geom_bar() +
+  facet_grid (~ category)
+# and now switching axes .
+ggplot(nobel_living_science, aes (x = country_us)) +
+  geom_bar() +
+  facet_grid (~ category) +
+  coord_flip()
+```
+
+Create a faceted bar plot visualizing the relationship between the category of prize and whether the laureate was in the US when they won the nobel prize. Interpret your visualization, and say a few words about whether the Buzzfeed headline is supported by the data.
+
+These data aren't all that relevant to the Buzzfeed claim, because they don't delve into where the person was born. With that said, it is interesting that there seems to be some variation with discipline. In chemistry, there is a smaller percentage of winners who live in the US.
+
 
 ### Exercise 4
 
-...
+
+```{r exercise-4}
+#exercise 4
+```
 
 ### Exercise 5
 
-...
+
+```{r exercise-5}
+#exercise 5
+```
 
 ### Exercise 6
 
-...
+
+```{r exercise-6}
+#exercise 6
+```
