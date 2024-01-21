@@ -30,6 +30,10 @@ How many observations and how many variables are in the dataset? Use inline code
 
 There are 935 observations and 26 variables.  Note that I could also just see this in the environment, but this code produced the information as well.
 
+There are `r number_of_rows` observations and `r number_of_columns` variables. 
+
+To display the number of rows using inline R code, you write `` `r "\u0060r number_of_rows\u0060"` `` which wraps backticks (\`) around your r expression. It produces the result `r number_of_rows`.
+
 
 ### Exercise 2
 
@@ -85,6 +89,8 @@ Confirm that once you have filtered for these characteristics you are left with 
 Hmm.  I have 453 observations. :(
 
 However ... when I check, I have no na's for country, no org in gender, and no na's for died_date.  I've also looked through the data set, and that confirms the above.  I think my 453 is correct, but I realize I may be wrong!
+
+> You're really close... like literally one character off. You've found all the people who have death dates, but you want to find the people who don't have death dates.
 
 ### Exercise 3
 
@@ -158,18 +164,19 @@ ggplot(data = nobel_living_science, mapping = aes(x = country_us,
 ```
 Answer:  Regardless of the category, a sizeable minority of the US-born winners were born in other countries, whereas none of the non-US-born winners were born in the United States.
 
+>comment: how could people who were born outside of the US be born in the US?  I think you meant to say that a sizeable chunk of the USA winners were born in the US, whereas none of the non-US winners were born in the United States.
+
 ### Exercise 6
 
-In a single pipeline, filter for laureates who won their prize in the US, but were born outside of the US, and then create a frequency table (with the count() function) for their birth country (born_country) and arrange the resulting data frame in descending order of number of observations for each country. Which country is the most common?
+In a *single pipeline*, filter for laureates who won their prize in the US, but were born outside of the US, and then create a frequency table (with the count() function) for their birth country (born_country) and arrange the resulting data frame in descending order of number of observations for each country. Which country is the most common?
 
 ```{r exercise-6}
 #assuming we're still working with living laureates in the sciences
-nobel_living_science_finalfilter <- nobel_living_science %>%
+nobel_living_science %>%
   filter (
     country_us == "USA" ,
     country_us_born == "Other"
-  )
-nobel_living_science_finalfilter %>%
+  ) %>%
   count (born_country) %>%
   arrange(desc(n))
 ```
