@@ -117,7 +117,7 @@ nobel_subset2 %>%
     ## 2 male     856
 
 ``` r
-# now filtering for alive people
+# now filtering for unalive people
 nobel_subset3 <- nobel %>%
   filter(!is.na(died_date))
 nobel_subset3 %>%
@@ -216,7 +216,7 @@ Create a new data frame called nobel_living that filters for
 
 laureates for whom country is available laureates who are people as
 opposed to organizations (organizations are denoted with “org” as their
-gender) laureates who are still alive (their died_date is NA)
+gender) laureates who are still unalive (their died_date is not NA)
 
 Confirm that once you have filtered for these characteristics you are
 left with a data frame with 228 observations, once again using inline
