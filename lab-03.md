@@ -38,6 +38,12 @@ There are 935 observations and 26 variables. Note that I could also just
 see this in the environment, but this code produced the information as
 well.
 
+There are 935 observations and 26 variables.
+
+To display the number of rows using inline R code, you write
+`` `r number_of_rows` `` which wraps backticks (\`) around your r
+expression. It produces the result 935.
+
 ### Exercise 2
 
 ``` r
@@ -111,7 +117,7 @@ nobel_subset2 %>%
     ## 2 male     856
 
 ``` r
-# now filtering for alive people
+# now filtering for unalive people
 nobel_subset3 <- nobel %>%
   filter(!is.na(died_date))
 nobel_subset3 %>%
@@ -210,7 +216,7 @@ Create a new data frame called nobel_living that filters for
 
 laureates for whom country is available laureates who are people as
 opposed to organizations (organizations are denoted with “org” as their
-gender) laureates who are still alive (their died_date is NA)
+gender) laureates who are still unalive (their died_date is not NA)
 
 Confirm that once you have filtered for these characteristics you are
 left with a data frame with 228 observations, once again using inline
@@ -222,6 +228,10 @@ However … when I check, I have no na’s for country, no org in gender,
 and no na’s for died_date. I’ve also looked through the data set, and
 that confirms the above. I think my 453 is correct, but I realize I may
 be wrong!
+
+> You’re really close… like literally one character off. You’ve found
+> all the people who have death dates, but you want to find the people
+> who don’t have death dates.
 
 ### Exercise 3
 
@@ -345,9 +355,14 @@ of the category, a sizeable minority of the US-born winners were born in
 other countries, whereas none of the non-US-born winners were born in
 the United States.
 
+> comment: how could people who were born outside of the US be born in
+> the US? I think you meant to say that a sizeable chunk of the USA
+> winners were born in the US, whereas none of the non-US winners were
+> born in the United States.
+
 ### Exercise 6
 
-In a single pipeline, filter for laureates who won their prize in the
+In a *single pipeline*, filter for laureates who won their prize in the
 US, but were born outside of the US, and then create a frequency table
 (with the count() function) for their birth country (born_country) and
 arrange the resulting data frame in descending order of number of
@@ -355,12 +370,11 @@ observations for each country. Which country is the most common?
 
 ``` r
 #assuming we're still working with living laureates in the sciences
-nobel_living_science_finalfilter <- nobel_living_science %>%
+nobel_living_science %>%
   filter (
     country_us == "USA" ,
     country_us_born == "Other"
-  )
-nobel_living_science_finalfilter %>%
+  ) %>%
   count (born_country) %>%
   arrange(desc(n))
 ```
